@@ -65,8 +65,7 @@ window.goBoom();
 
 **Context**: `this` refers to the "window" object (global scope).
 
-**Gotcha**: This behavior has changed in ECMAScript 5
-  only when using strict mode[2]: `'use strict';`
+**Gotcha**: This behavior has changed in ECMAScript 5 only when using strict mode: `'use strict';`
 
 ### Method Invocation Pattern
 
@@ -85,10 +84,6 @@ deathstar.goBoom();
 
 **Context**: `this` refers to the host object.
 
-#### We do
-  Exercise: object_literal.js within this.html
-
-
 ### Call/Apply Invocation Pattern
 
 Function objects have their own set of native methods, most notably are `.call` and `.apply`. These methods will invoke the function with a provided contextual object.
@@ -104,11 +99,6 @@ goBoom.call(deathstar);
 ```
 
 **Context**: `this` refers to the passed object.
-
-
-** TODO ** Instead of assigning all the exercises at the end, we are working to move them with the appropriate invocation pattern - throughout the lesson.  THis is partially completed.
-#### We do
-  Exercise: global_function.js within this.html
 
 ### Constructor Invocation Pattern
 
@@ -145,7 +135,7 @@ Note that `this` is not a variable. It is a keyword. You cannot change the value
 
 ## Lab (Pair)
 
-Pair with a partner and follow the instructions in [`this.html`](./this.html). Your goal in this assignment is to read and understand the code examples presented. Take time to contemplate the execution flow, and note any questions you have for discussion.
+Pair with a partner and follow the instructions in [`this.html`](this.html). Your goal in this assignment is to read and understand the code examples presented. Take time to contemplate the execution flow, and note any questions you have for discussion.
 
 Many of these scripts use the special `debugger` keyword to stop JS execution and open your console. Use this opportunity to inspect your environment (perhaps by looking at `this`?) and then [continue](https://developer.chrome.com/devtools/docs/javascript-debugging).
 
