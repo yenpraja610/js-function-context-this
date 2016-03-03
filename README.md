@@ -146,9 +146,10 @@ would say "the object receives the method".
 
 How this breaks down:
 
-1. How this breaks down is that a new object is created.
-1. When the function is called upon `this` is set.
-1. More function stuff.
+1. Creates a new empty object ({})
+1. Attaches the constructor to the object as a property
+1. Invokes the constructor function on the new object
+1. Returns the object
 
 ## Summary
 
