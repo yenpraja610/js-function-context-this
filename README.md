@@ -1,4 +1,4 @@
-![General Assembly Logo](http://i.imgur.com/ke8USTq.png)
+[![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
 
 # JavaScript: Context \& `this`
 
@@ -8,19 +8,27 @@
 
 By the end of this lesson, students should be able to:
 
-- Recall whether or not `this` is determined at declaration.
-- Explain what `this` points to in each calling context.
-- Read and follow the execution context of code that uses different `this` idioms.
+-  Recall whether or not `this` is determined at declaration.
+-  Explain what `this` points to in each calling context.
+-  Read and follow the execution context of code that uses different `this` idioms.
 
 ## `this` Is A Reference
 
-> We use this similar to the way we use pronouns in natural languages like English and French. We write: “John is running fast because he is trying to catch the train.” Note the use of the pronoun “he.” We could have written this: “John is running fast because John is trying to catch the train.” We don’t reuse “John” in this manner, for if we do, our family, friends, and colleagues would abandon us. Yes, they would. In a similar aesthetic manner, we use the this keyword as a shortcut, a referent to refer to an object.
+> We use this similar to the way we use pronouns in natural languages like
+>English and French. We write: “John is running fast because he is trying to
+>catch the train.” Note the use of the pronoun “he.” We could have written this:
+>“John is running fast because John is trying to catch the train.” We don’t
+>reuse “John” in this manner, for if we do, our family, friends, and colleagues
+>would abandon us. Yes, they would. In a similar aesthetic manner, we use the
+>this keyword as a shortcut, a referent to refer to an object.
 >
 > Source: [Understanding Javascript 'this' pointer.](http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/)
 
 ## `this` Changes by Call Context
 
-A function can indiscriminately operate upon *any* object. When a function is invoked, it is *bound* to an object on which it operates. The *contextual* object on which a function operates is referenced using the keyword `this`.
+A function can indiscriminately operate upon *any* object. When a function is
+invoked, it is *bound* to an object on which it operates. The *contextual*
+object on which a function operates is referenced using the keyword `this`.
 
 ```js
 var xwing = {
@@ -45,7 +53,9 @@ console.log(xwing.pilot);
 
 ## The Four Patterns of Invocation
 
-We must *invoke* a function to run it (ie: call upon the function to do its thing). Amazingly, there are FOUR ways to invoke a function in JavaScript. This makes JS both amazingly flexible and absolutely insane.
+We must *invoke* a function to run it (ie: call upon the function to do its
+thing). Amazingly, there are FOUR ways to invoke a function in JavaScript. This
+makes JS both amazingly flexible and absolutely insane.
 
 ### Function Invocation Pattern
 
@@ -63,13 +73,18 @@ goBoom();
 window.goBoom();
 ```
 
-**Context**: `this` refers to the "window" object (global scope).
+**Context**: `this` refers to the `window` object (global scope).  Here we
+would say "a method is called on an object".  In this case the object is the
+`window`.
 
-**Gotcha**: This behavior has changed in ECMAScript 5 only when using strict mode: `'use strict';`
+**Gotcha**: This behavior has changed in ECMAScript 5 only when using strict
+mode: `'use strict';`
 
 ### Method Invocation Pattern
 
-When a function is defined on an object, it is said to be a *method* of the object. When a method is invoked through its host object, the method is bound to its host:
+When a function is defined on an object, it is said to be a *method* of the
+object. When a method is invoked through its host object, the method is bound
+to its host:
 
 ```js
 var deathstar = {
@@ -86,7 +101,9 @@ deathstar.goBoom();
 
 ### Call/Apply Invocation Pattern
 
-Function objects have their own set of native methods, most notably are `.call` and `.apply`. These methods will invoke the function with a provided contextual object.
+Function objects have their own set of native methods, most notably are
+`.call` and `.apply`. These methods will invoke the function with a provided
+contextual object.
 
 ```js
 function goBoom() {
@@ -98,13 +115,18 @@ goBoom.call(deathstar);
 // this === deathstar
 ```
 
-**Context**: `this` refers to the passed object.
+**Context**: `this` refers to the passed object.  Here you would say "the
+ object receives the method".
 
 ### Constructor Invocation Pattern
 
-Any function may act as a constructor for new object instances. New object instances may be constructed with the `"new"` keyword while invoking a function.
+Any function may act as a constructor for new object instances. New object
+instances may be constructed with the `"new"` keyword while invoking a
+function.
 
-Constructors are very similar to Ruby class constructors, in that they represent proper nouns within our application. Therefore they should follow the convention of capitalized names:
+Constructors are very similar to Ruby class constructors, in that they
+represent proper nouns within our application. Therefore they should follow
+the convention of capitalized names:
 
 ```js
 function Deathstar() {
@@ -115,7 +137,14 @@ var deathstar = new Deathstar();
 // this === shiny new Deathstar instance
 ```
 
-**Context**: `this` refers to the newly-created object instance.
+**Context**: `this` refers to the newly-created object instance.  Here we
+would say "the object receives the method".
+
+How this breaks down:
+
+1. How this breaks down is that a new object is created.
+1. When the function is called upon `this` is set.
+1. More function stuff.
 
 ## Summary
 
@@ -130,8 +159,34 @@ var deathstar = new Deathstar();
 >
 > Source: [You-Dont-Know-JS/ch2.md](https://github.com/getify/You-Dont-Know-JS/blob/58dbf4f867be0d9c51dfc341765e4e4211608aa1/this%20&%20object%20prototypes/ch2.md)
 
-Inside a jQuery method, `$(this)` refers to the document element that was selected.
-Note that `this` is not a variable. It is a keyword. You cannot change the value of `this`.
+
+## This and Array Methods
+
+```javascript
+function Counter() {
+  this.sum = 0;
+  this.count = 0;
+}
+Counter.prototype.add = function(array) {
+  array.forEach(function(entry) {
+    this.sum += entry;
+    ++this.count;
+  }, this);
+  // ^---- Note
+};
+
+var obj = new Counter();
+obj.add([2, 5, 9]);
+obj.count
+// 3
+obj.sum
+// 16
+```
+
+Since obj.add() calls add() with this referring to obj, in add passing this into forEach() makes this in the forEach() callback also refer to obj.
+
+[forEach - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
+
 
 ## Lab (Pair)
 
@@ -145,3 +200,9 @@ Many of these scripts use the special `debugger` keyword to stop JS execution an
 - [Everything you wanted to know about JavaScript scope](http://toddmotto.com/everything-you-wanted-to-know-about-javascript-scope/)
 - [Understand JavaScript’s “this” With Clarity, and Master It | JavaScript is Sexy](http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/)
 - [You-Dont-Know-JS/README.md at master · getify/You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20&%20object%20prototypes/README.md#you-dont-know-js-this--object-prototypes)
+- [this - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
+
+## [License](LICENSE)
+
+Source code distributed under the MIT license. Text and other assets copyright
+General Assembly, Inc., all rights reserved.
