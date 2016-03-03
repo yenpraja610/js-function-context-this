@@ -12,6 +12,10 @@ By the end of this lesson, students should be able to:
 -  Explain what `this` points to in each calling context.
 -  Read and follow the execution context of code that uses different `this` idioms.
 
+## Preparation
+
+1.  [Fork and clone](https://github.com/ga-wdi-boston/meta/wiki/ForkAndClone) this repository.
+
 ## `this` Is A Reference
 
 > We use this similar to the way we use pronouns in natural languages like
