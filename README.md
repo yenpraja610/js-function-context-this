@@ -191,6 +191,42 @@ Since obj.add() calls add() with this referring to obj, in add passing this into
 
 [forEach - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
 
+## Binding
+
+Consider the following code:
+
+```javascript
+//            <button>Get Random Person</button>​
+​//        <input type="text">​
+​
+​
+​var user = {
+    data        :[
+        {name:"T. Woods", age:37},
+        {name:"P. Mickelson", age:43}
+    ],
+    clickHandler:function (event) {
+        var randomNum = ((Math.random () * 2 | 0) + 1) - 1; // random number between 0 and 1​
+​
+        // This line is adding a random person from the data array to the text field​
+        $ ("input").val (this.data[randomNum].name + " " + this.data[randomNum].age);
+    }
+​
+}
+​
+​// Assign an eventHandler to the button's click event​
+$ ("button").click (user.clickHandler);
+```
+
+What is happening and will this work?
+
+With the `.bind()` method we can bind the context of user.clickHandler to the
+user object like so:
+
+```javascript
+$ ("button").click (user.clickHandler.bind (user));
+```
+
 
 ## Extra: Fat Arrow (New in ES6)
 
