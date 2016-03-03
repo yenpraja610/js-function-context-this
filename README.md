@@ -35,7 +35,7 @@ invoked, it is *bound* to an object on which it operates. The *contextual*
 object on which a function operates is referenced using the keyword `this`.
 
 ```js
-var xwing = {
+let xwing = {
     pilot: null,
 
     setPilot: function(pilot) {
@@ -91,7 +91,7 @@ object. When a method is invoked through its host object, the method is bound
 to its host:
 
 ```js
-var deathstar = {
+let deathstar = {
     goBoom: function() {
       console.log(this);
   }
@@ -114,7 +114,7 @@ function goBoom() {
     console.log(this);
 }
 
-var deathstar = {};
+let deathstar = {};
 goBoom.call(deathstar);
 // this === deathstar
 ```
@@ -137,7 +137,7 @@ function Deathstar() {
     console.log(this);
 }
 
-var deathstar = new Deathstar();
+let deathstar = new Deathstar();
 // this === shiny new Deathstar instance
 ```
 
@@ -153,13 +153,13 @@ How this breaks down:
 ## Summary
 
 > 1. Is the function called with `new` (**new binding**)? If so, `this` is the newly constructed object.
->     `var bar = new foo()`
+>     `let bar = new foo()`
 > 2. Is the function called with `call` or `apply` (**explicit binding**), even hidden inside a `bind` *hard binding*? If so, `this` is the explicitly specified object.
->     `var bar = foo.call( obj2 )`
+>     `let bar = foo.call( obj2 )`
 > 3. Is the function called with a context (**implicit binding**), otherwise known as an owning or containing object? If so, `this` is *that* context object.
->     `var bar = obj1.foo()`
+>     `let bar = obj1.foo()`
 > 4. Otherwise, default the `this` (**default binding**). If in `strict mode`, pick `undefined`, otherwise pick the `global` object.
->     `var bar = foo()`
+>     `let bar = foo()`
 >
 > Source: [You-Dont-Know-JS/ch2.md](https://github.com/getify/You-Dont-Know-JS/blob/58dbf4f867be0d9c51dfc341765e4e4211608aa1/this%20&%20object%20prototypes/ch2.md)
 
@@ -179,7 +179,7 @@ Counter.prototype.add = function(array) {
   // ^---- Note
 };
 
-var obj = new Counter();
+let obj = new Counter();
 obj.add([2, 5, 9]);
 obj.count
 // 3
