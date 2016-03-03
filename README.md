@@ -188,6 +188,38 @@ Since obj.add() calls add() with this referring to obj, in add passing this into
 [forEach - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
 
 
+## Extra: Fat Arrow (New in ES6)
+
+Consider the following code, what is `this`?
+
+```javascript
+$('.current-time').each(function () {
+  setInterval(function () {
+    $(this).text(Date.now());
+  }, 1000);
+});
+```
+
+The above code won't return do what you want, can you think of a
+way to get the code to do what is expcted?
+
+```bash
+Figure this out on your own.
+```
+
+Now with arrow functions (commonly referred to as "fat arrow"), you
+could write the code below and it would have the intended effect:
+
+```javascript
+$('.current-time').each(function () {
+  setInterval(() => $(this).text(Date.now()), 1000);
+});
+```
+
+Fat arrow quick takes:
+1. It does not create it's own `this` context.
+2. A one line fat arrow function has an implicit return.
+
 ## Lab (Pair)
 
 Pair with a partner and follow the instructions in [`this.html`](this.html). Your goal in this assignment is to read and understand the code examples presented. Take time to contemplate the execution flow, and note any questions you have for discussion.
@@ -201,6 +233,7 @@ Many of these scripts use the special `debugger` keyword to stop JS execution an
 - [Understand JavaScript’s “this” With Clarity, and Master It | JavaScript is Sexy](http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/)
 - [You-Dont-Know-JS/README.md at master · getify/You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20&%20object%20prototypes/README.md#you-dont-know-js-this--object-prototypes)
 - [this - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
+- - [Fat Arrow - Strongloop](https://strongloop.com/strongblog/an-introduction-to-javascript-es6-arrow-functions/)
 
 ## [License](LICENSE)
 
