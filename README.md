@@ -151,20 +151,6 @@ How this breaks down:
 1. Invokes the constructor function on the new object
 1. Returns the object
 
-## Summary
-
-> 1. Is the function called with `new` (**new binding**)? If so, `this` is the newly constructed object.
->     `let bar = new foo()`
-> 2. Is the function called with `call` or `apply` (**explicit binding**), even hidden inside a `bind` *hard binding*? If so, `this` is the explicitly specified object.
->     `let bar = foo.call( obj2 )`
-> 3. Is the function called with a context (**implicit binding**), otherwise known as an owning or containing object? If so, `this` is *that* context object.
->     `let bar = obj1.foo()`
-> 4. Otherwise, default the `this` (**default binding**). If in `strict mode`, pick `undefined`, otherwise pick the `global` object.
->     `let bar = foo()`
->
-> Source: [You-Dont-Know-JS/ch2.md](https://github.com/getify/You-Dont-Know-JS/blob/58dbf4f867be0d9c51dfc341765e4e4211608aa1/this%20&%20object%20prototypes/ch2.md)
-
-
 ## This and Array Methods
 
 ```javascript
@@ -229,6 +215,18 @@ user object like so:
 $ ("button").click (user.clickHandler.bind (user));
 ```
 
+## Summary
+
+> 1. Is the function called with `new` (**new binding**)? If so, `this` is the newly constructed object.
+>     `let bar = new foo()`
+> 2. Is the function called with `call` or `apply` (**explicit binding**), even hidden inside a `bind` *hard binding*? If so, `this` is the explicitly specified object.
+>     `let bar = foo.call( obj2 )`
+> 3. Is the function called with a context (**implicit binding**), otherwise known as an owning or containing object? If so, `this` is *that* context object.
+>     `let bar = obj1.foo()`
+> 4. Otherwise, default the `this` (**default binding**). If in `strict mode`, pick `undefined`, otherwise pick the `global` object.
+>     `let bar = foo()`
+>
+> Source: [You-Dont-Know-JS/ch2.md](https://github.com/getify/You-Dont-Know-JS/blob/58dbf4f867be0d9c51dfc341765e4e4211608aa1/this%20&%20object%20prototypes/ch2.md)
 
 ## Extra: Fat Arrow (New in ES6)
 
