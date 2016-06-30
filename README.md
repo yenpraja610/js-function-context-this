@@ -8,13 +8,15 @@
 
 By the end of this lesson, students should be able to:
 
--  Recall whether or not `this` is determined at declaration.
--  Explain what `this` points to in each calling context.
--  Read and follow the execution context of code that uses different `this` idioms.
+-   Recall whether or not `this` is determined at declaration.
+-   Explain what `this` points to in each calling context.
+-   Read and follow the execution context of code that uses different `this`
+idioms.
 
 ## Preparation
 
-1.  [Fork and clone](https://github.com/ga-wdi-boston/meta/wiki/ForkAndClone) this repository.
+1.  [Fork and clone](https://github.com/ga-wdi-boston/meta/wiki/ForkAndClone)
+this repository.
 
 ## `this` Is A Reference
 
@@ -63,7 +65,8 @@ makes JS both amazingly flexible and absolutely insane.
 
 ### Function Invocation Pattern
 
-When a function is invoked without context, the function is bound to global scope:
+When a function is invoked without context, the function is bound to global
+scope:
 
 ```js
 function goBoom() {
@@ -146,10 +149,10 @@ would say "the object receives the method".
 
 How this breaks down:
 
-1. Creates a new empty object ({})
-1. Attaches the constructor to the object as a property
-1. Invokes the constructor function on the new object
-1. Returns the object
+1.  Creates a new empty object ({})
+1.  Attaches the constructor to the object as a property
+1.  Invokes the constructor function on the new object
+1.  Returns the object
 
 ## This and Array Methods
 
@@ -175,7 +178,8 @@ obj.sum
 // 16
 ```
 
-Since obj.add() calls add() with this referring to obj, in add passing this into forEach() makes this in the forEach() callback also refer to obj.
+Since obj.add() calls add() with this referring to obj, in add passing this
+into forEach() makes this in the forEach() callback also refer to obj.
 
 [forEach - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
 
@@ -189,21 +193,19 @@ Consider the following code:
 ​
 ​
 ​var user = {
-    data        :[
-        {name:"T. Woods", age:37},
-        {name:"P. Mickelson", age:43}
-    ],
-    clickHandler:function (event) {
-        var randomNum = ((Math.random () * 2 | 0) + 1) - 1; // random number between 0 and 1​
-​
-        // This line is adding a random person from the data array to the text field​
-        $ ("input").val (this.data[randomNum].name + " " + this.data[randomNum].age);
-    }
-​
+  data: [
+          { name:"T. Woods", age:37 },
+          { name:"P. Mickelson", age:43 }
+        ],
+  clickHandler: function(event){
+    var randomNum = ((Math.random() * 2 | 0) + 1) - 1; // random number between 0 and 1​
+    // This line is adding a random person from the data array to the text field​
+    $ ("input").val(this.data[randomNum].name + " " + this.data[randomNum].age);
+  }
 }
 ​
 ​// Assign an eventHandler to the button's click event​
-$ ("button").click (user.clickHandler);
+$ ("button").on('click', user.clickHandler);
 ```
 
 What is happening and will this work?
@@ -212,29 +214,34 @@ With the `.bind()` method we can bind the context of user.clickHandler to the
 user object like so:
 
 ```javascript
-$ ("button").click (user.clickHandler.bind (user));
+$ ("button").on('click', user.clickHandler.bind(user));
 ```
 
 ## Summary
 
-> 1. Is the function called with `new` (**new binding**)? If so, `this` is the newly constructed object.
->     `let bar = new foo()`
-> 2. Is the function called with `call` or `apply` (**explicit binding**), even hidden inside a `bind` *hard binding*? If so, `this` is the explicitly specified object.
->     `let bar = foo.call( obj2 )`
-> 3. Is the function called with a context (**implicit binding**), otherwise known as an owning or containing object? If so, `this` is *that* context object.
->     `let bar = obj1.foo()`
-> 4. Otherwise, default the `this` (**default binding**). If in `strict mode`, pick `undefined`, otherwise pick the `global` object.
->     `let bar = foo()`
->
-> Source: [You-Dont-Know-JS/ch2.md](https://github.com/getify/You-Dont-Know-JS/blob/58dbf4f867be0d9c51dfc341765e4e4211608aa1/this%20&%20object%20prototypes/ch2.md)
+1.  Is the function called with `new` (**new binding**)? If so, `this` is the
+newly constructed object.      `let bar = new foo()`
+1.  Is the function called with `call` or `apply` (**explicit binding**), even
+hidden inside a `bind` *hard binding*? If so, `this` is the explicitly
+specified object.
+     `let bar = foo.call( obj2 )`
+1.  Is the function called with a context (**implicit binding**), otherwise
+known as an owning or containing object? If so, `this` is *that* context
+object.
+     `let bar = obj1.foo()`
+1.  Otherwise, default the `this` (**default binding**). If in `strict mode`,
+pick `undefined`, otherwise pick the `global` object.
+     `let bar = foo()`
+
+ Source: [You-Dont-Know-JS/ch2.md](https://github.com/getify/You-Dont-Know-JS/blob/58dbf4f867be0d9c51dfc341765e4e4211608aa1/this%20&%20object%20prototypes/ch2.md)
 
 ## Extra: Fat Arrow (New in ES6)
 
 Consider the following code, what is `this`?
 
 ```javascript
-$('.current-time').each(function () {
-  setInterval(function () {
+$('.current-time').each(function() {
+  setInterval(function() {
     $(this).text(Date.now());
   }, 1000);
 });
@@ -251,29 +258,36 @@ Now with arrow functions (commonly referred to as "fat arrow"), you
 could write the code below and it would have the intended effect:
 
 ```javascript
-$('.current-time').each(function () {
+$('.current-time').each(function() {
   setInterval(() => $(this).text(Date.now()), 1000);
 });
 ```
 
 Fat arrow quick takes:
-1. It does not create it's own `this` context.
-2. A one line fat arrow function has an implicit return.
+
+1.  It does not create it's own `this` context.
+1.  A one line fat arrow function has an implicit return.
 
 ## Lab (Pair)
 
-Pair with a partner and follow the instructions in [`this.html`](this.html). Your goal in this assignment is to read and understand the code examples presented. Take time to contemplate the execution flow, and note any questions you have for discussion.
+Pair with a partner and follow the instructions in [`this.html`](this.html).
+Your goal in this assignment is to read and understand the code examples
+presented. Take time to contemplate the execution flow, and note any questions
+you have for discussion.
 
-Many of these scripts use the special `debugger` keyword to stop JS execution and open your console. Use this opportunity to inspect your environment (perhaps by looking at `this`?) and then [continue](https://developer.chrome.com/devtools/docs/javascript-debugging).
+Many of these scripts use the special `debugger` keyword to stop JS execution
+and open your console. Use this opportunity to inspect your environment (perhaps
+by looking at `this`?) and then
+[continue](https://developer.chrome.com/devtools/docs/javascript-debugging).
 
 ## Additional Resources
 
-- [Functions - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions)
-- [Everything you wanted to know about JavaScript scope](http://toddmotto.com/everything-you-wanted-to-know-about-javascript-scope/)
-- [Understand JavaScript’s “this” With Clarity, and Master It | JavaScript is Sexy](http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/)
-- [You-Dont-Know-JS/README.md at master · getify/You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20&%20object%20prototypes/README.md#you-dont-know-js-this--object-prototypes)
-- [this - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
-- [Fat Arrow - Strongloop](https://strongloop.com/strongblog/an-introduction-to-javascript-es6-arrow-functions/)
+-   [Functions - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions)
+-   [Everything you wanted to know about JavaScript scope](http://toddmotto.com/everything-you-wanted-to-know-about-javascript-scope/)
+-   [Understand JavaScript’s “this” With Clarity, and Master It | JavaScript is Sexy](http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/)
+-   [You-Dont-Know-JS/README.md at master · getify/You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20&%20object%20prototypes/README.md#you-dont-know-js-this--object-prototypes)
+-   [this - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
+-   [Fat Arrow - Strongloop](https://strongloop.com/strongblog/an-introduction-to-javascript-es6-arrow-functions/)
 
 ## [License](LICENSE)
 
