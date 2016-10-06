@@ -140,7 +140,7 @@ function Deathstar() {
     console.log(this);
 }
 
-let deathstar = new Deathstar();
+let thatsNoMoon = new Deathstar();
 // this === shiny new Deathstar instance
 ```
 
@@ -178,8 +178,8 @@ obj.sum
 // 16
 ```
 
-Since obj.add() calls add() with this referring to obj, in add passing this
-into forEach() makes this in the forEach() callback also refer to obj.
+Since obj.add() calls add() with `this` referring to obj, in add passing `this`
+into forEach() makes `this` in the forEach() callback also refer to obj.
 
 [forEach - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
 
@@ -194,8 +194,9 @@ Consider the following code:
 ​
 let user = {
   data: [
-          { name:"T. Woods", age:37 },
-          { name:"P. Mickelson", age:43 }
+          { name:"T. Woods", handicap:2 },
+          { name:"P. Mickelson", handicap:1 },
+          { name:"C. Austin", handicap:0 }
         ],
   clickHandler: function(event){
     let randomNum = ((Math.random() * 2 | 0) + 1) - 1; // random number between 0 and 1​
@@ -291,5 +292,5 @@ by looking at `this`?) and then
 
 ## [License](LICENSE)
 
-Source code distributed under the MIT license. Text and other assets copyright
-General Assembly, Inc., all rights reserved.
+1. All content is licensed under a CC­BY­NC­SA 4.0 license.
+1. All software code is licensed under GNU GPLv3. For commercial use or alternative licensing, please contact legal@ga.co.
