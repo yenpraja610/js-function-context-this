@@ -1,4 +1,5 @@
-var user = {
+/* jshint debug: true */
+const user = {
     tournament:'The Masters',
     data      :[
         {name:'T. Woods', age:37},

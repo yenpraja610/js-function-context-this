@@ -1,9 +1,9 @@
 // Invoking a Function as a Function
 
-console.log("this(before):", this)
+console.log("this(before):", this);
 
-function hello(thing) {
-  console.log("this(in hello):", this)
+const hello =function(thing) {
+  console.log("this(in hello):", this);
   console.log("Hello " + thing);
 }
 

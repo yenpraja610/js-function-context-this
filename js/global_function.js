@@ -1,5 +1,7 @@
 // Global variables
-var firstName = "Peter",
+/* jshint debug: true */
+
+const firstName = "Peter",
 lastName = "Ally";
 
 // Global function
@@ -24,7 +26,7 @@ function showFullName () {
 }
 
 // Global person, it's an object literal
-var person = {
+const person = {
     firstName   :'Penelope',
     lastName    :'Barrymore',
     showFullName:function () {

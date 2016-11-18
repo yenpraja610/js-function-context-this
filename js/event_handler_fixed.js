@@ -1,11 +1,12 @@
-var user = {
+/* jshint debug: true */
+const user = {
     data:[
         {name:'T. Woods', age:37},
         {name:'P. Mickelson', age:43}
     ],
     clickHandler:function (event) {
         // random number between 0 and 1
-        var randomNum = ((Math.random () * 2 | 0) + 1) - 1,
+        let randomNum = ((Math.random () * 2 | 0) + 1) - 1,
         randomName,
         randomAge;
 

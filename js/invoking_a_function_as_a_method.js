@@ -8,16 +8,16 @@
 // The thing called this, is the object that "owns" the JavaScript code.
 // In this case the value of this is `elon_musk`.
 
-var elon_musk = {
+const elon_musk = {
   name: "Elon Musk",
   hello: function(message) {
-    console.log("this(in hello):", this)
+    console.log("this(in hello):", this);
     console.log(this.name + ' says, "Hello ' + message + '"');
   }
 }
 
 // this:
-elon_musk.hello("SpaceX!")
+elon_musk.hello("SpaceX!");
 
 // desugars to this:
 // elon_musk.hello.call(elon_musk, "SpaceX!");

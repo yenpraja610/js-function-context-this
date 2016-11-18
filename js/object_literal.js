@@ -11,7 +11,7 @@
 */
 
 // Create an object literal for person.
-var person = {
+const person = {
     firstName   :'Penelope',
     lastName    :'Barrymore',
     fullName:function () {

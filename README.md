@@ -37,7 +37,7 @@ invoked, it is *bound* to an object on which it operates. The *contextual*
 object on which a function operates is referenced using the keyword `this`.
 
 ```js
-let xwing = {
+const xwing = {
     pilot: null,
 
     setPilot: function(pilot) {
@@ -69,7 +69,7 @@ When a function is invoked without context, the function is bound to global
 scope:
 
 ```js
-function goBoom() {
+const goBoom = function() {
     console.log(this);
 }
 
@@ -113,7 +113,7 @@ Function objects have their own set of native methods, most notably are
 contextual object.
 
 ```js
-function goBoom() {
+const goBoom = function() {
     console.log(this);
 }
 
@@ -136,7 +136,7 @@ represent proper nouns within our application. Therefore they should follow
 the convention of capitalized names:
 
 ```js
-function Deathstar() {
+const Deathstar = function() {
     console.log(this);
 }
 
@@ -157,10 +157,11 @@ How this breaks down:
 ## This and Array Methods
 
 ```javascript
-function Counter() {
+const Counter = function() {
   this.sum = 0;
   this.count = 0;
 }
+
 Counter.prototype.add = function(array) {
   array.forEach(function(entry) {
     this.sum += entry;
@@ -170,7 +171,7 @@ Counter.prototype.add = function(array) {
   // ^---- Note
 };
 
-let obj = new Counter();
+const obj = new Counter();
 obj.add([2, 5, 9]);
 obj.count
 // 3
@@ -192,7 +193,7 @@ Consider the following code:
 ​//        <input type="text">​
 ​
 ​
-let user = {
+const user = {
   data: [
           { name:"T. Woods", handicap:2 },
           { name:"P. Mickelson", handicap:1 },

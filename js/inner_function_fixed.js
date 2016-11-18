@@ -1,4 +1,4 @@
-var user = {
+const user = {
     tournament:'The Masters',
     data      :[
         {name:'T. Woods', age:37},
@@ -8,7 +8,7 @@ var user = {
     showPersonTournament:function () {
         // Let capture the this pointer in the enclosing function.
         // And use it in the enclosed anon function.
-        var theUserObj = this;
+        const theUserObj = this;
 
         this.data.forEach (function (person) {
             // What is the this pointer?
