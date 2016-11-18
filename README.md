@@ -249,8 +249,8 @@ $('.current-time').each(function() {
 });
 ```
 
-The above code won't return do what you want, can you think of a
-way to get the code to do what is expcted?
+The above code won't return what you want, can you think of a
+way to get the code to display the current time?
 
 ```bash
 Figure this out on your own.
