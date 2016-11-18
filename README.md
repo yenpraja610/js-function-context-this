@@ -37,7 +37,7 @@ invoked, it is *bound* to an object on which it operates. The *contextual*
 object on which a function operates is referenced using the keyword `this`.
 
 ```js
-const xwing = {
+let xwing = {
     pilot: null,
 
     setPilot: function(pilot) {
@@ -70,7 +70,7 @@ scope:
 
 ```js
 const goBoom = function() {
-    console.log(this);
+    console.log('this is ', this);
 }
 
 goBoom();
@@ -96,7 +96,7 @@ to its host:
 ```js
 let deathstar = {
     goBoom: function() {
-      console.log(this);
+      console.log('this is ', this);
   }
 };
 
@@ -113,17 +113,20 @@ Function objects have their own set of native methods, most notably are
 contextual object.
 
 ```js
-const goBoom = function() {
-    console.log(this);
-}
+const goBoom = function (weapon) {
+  console.log("this refers to ", this);
+};
 
-let deathstar = {};
+let deathstar = {
+  weapon: 'Planet destroying laser'
+};
+
 goBoom.call(deathstar);
 // this === deathstar
 ```
 
-**Context**: `this` refers to the object passed to `.call`. This method can be read as
-"Call the function goBoom with deathstar as the context (this)."
+**Context**: `this` refers to the passed object.  Here you would say "the
+ object receives the method".
 
 ### Constructor Invocation Pattern
 
@@ -136,11 +139,18 @@ represent proper nouns within our application. Therefore they should follow
 the convention of capitalized names:
 
 ```js
-const Deathstar = function() {
-    console.log(this);
-}
+const Deathstar = function (weapon) {
+  console.log("this is ", this);
+  this.emporer = "Darth Sidius";
+  this.weapon = weapon;
+  this.whatIsThis = function(){
+    console.log("Inside whatIsThis, this is ", this);
+  };
+  console.log("this is ", this);
+};
 
-let thatsNoMoon = new Deathstar();
+let thatsNoMoon = new Deathstar('Mega giant huge laser');
+let thatsNoMoon = new Deathstar('Happy little Ewoks');
 // this === shiny new Deathstar instance
 ```
 
@@ -149,34 +159,45 @@ would say "the object receives the method".
 
 How this breaks down:
 
-1.  Creates a new empty object ({})
-1.  Attaches the constructor to the object as a property
-1.  Invokes the constructor function on the new object
-1.  Returns the object
+1.  Creates a new empty object ({}) // {}
+1.  Attaches the constructor to the object as a property // {}.constructor = Deathstar
+1.  Invokes the constructor function on the new object // {}.constructor(`???`);
+1.  Returns the object // {}
 
 ## This and Array Methods
 
 ```javascript
-const Counter = function() {
+let Counter = function() {
   this.sum = 0;
   this.count = 0;
-}
-
-Counter.prototype.add = function(array) {
-  array.forEach(function(entry) {
-    this.sum += entry;
-    ++this.count;
-    console.log(this);
-  }, this);
-  // ^---- Note
 };
 
-const obj = new Counter();
-obj.add([2, 5, 9]);
-obj.count
+const sumAndCount = function(entry){
+  this.sum += entry;
+  ++this.count;
+  console.log(this);
+};
+
+Counter.prototype.add = function(array) {
+  array.forEach(sumAndCount, this);
+                          // ^---- Note
+};
+
+const counter = new Counter();
+counter.add([2, 5, 9]);
+counter.count
 // 3
-obj.sum
+counter.sum
 // 16
+```
+What if we re-defined `add` the following way?
+```js
+let anyObject = {};
+
+Counter.prototype.add = function(array) {
+  array.forEach(sumAndCount, anyObject);
+                          // ^---- Note
+};
 ```
 
 Since obj.add() calls add() with `this` referring to obj, in add passing `this`
@@ -193,7 +214,7 @@ Consider the following code:
 ​//        <input type="text">​
 ​
 ​
-const user = {
+let user = {
   data: [
           { name:"T. Woods", handicap:2 },
           { name:"P. Mickelson", handicap:1 },
@@ -249,8 +270,8 @@ $('.current-time').each(function() {
 });
 ```
 
-The above code won't return what you want, can you think of a
-way to get the code to display the current time?
+The above code won't return do what you want, can you think of a
+way to get the code to do what is expcted?
 
 ```bash
 Figure this out on your own.
@@ -281,6 +302,8 @@ Many of these scripts use the special `debugger` keyword to stop JS execution
 and open your console. Use this opportunity to inspect your environment (perhaps
 by looking at `this`?) and then
 [continue](https://developer.chrome.com/devtools/docs/javascript-debugging).
+When you're ready to begin, open the console and type `open this.html` and
+follow the instructions on the screen.
 
 ## Additional Resources
 
