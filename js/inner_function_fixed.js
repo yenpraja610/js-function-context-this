@@ -1,3 +1,4 @@
+/* jshint debug: true */
 const user = {
     tournament:'The Masters',
     data      :[

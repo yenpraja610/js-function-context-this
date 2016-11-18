@@ -14,7 +14,7 @@ const elon_musk = {
     console.log("this(in hello):", this);
     console.log(this.name + ' says, "Hello ' + message + '"');
   }
-}
+};
 
 // this:
 elon_musk.hello("SpaceX!");

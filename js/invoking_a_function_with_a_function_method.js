@@ -9,11 +9,11 @@
 
 const sally_ride = {
   name: "Sally Ride"
-}
+};
 
 const astronaut_steve = {
   name: "Steve Swanson"
-}
+};
 
 
 function hello(thing) {
