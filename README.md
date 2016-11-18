@@ -122,8 +122,8 @@ goBoom.call(deathstar);
 // this === deathstar
 ```
 
-**Context**: `this` refers to the passed object.  Here you would say "the
- object receives the method".
+**Context**: `this` refers to the object passed to `.call`. This method can be read as
+"Call the function goBoom with deathstar as the context (this)."
 
 ### Constructor Invocation Pattern
 
