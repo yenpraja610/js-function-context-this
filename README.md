@@ -69,9 +69,9 @@ When a function is invoked without context, the function is bound to global
 scope:
 
 ```js
-function goBoom() {
-    console.log(this);
-}
+const goBoom = function(){
+  console.log(this);
+};
 
 goBoom();
 // this === window
@@ -97,7 +97,7 @@ to its host:
 let deathstar = {
     goBoom: function() {
       console.log(this);
-  }
+  };
 };
 
 deathstar.goBoom();
@@ -113,11 +113,14 @@ Function objects have their own set of native methods, most notably are
 contextual object.
 
 ```js
-function goBoom() {
-    console.log(this);
-}
+function goBoom(weapon) {
+  console.log("this refers to ", this);
+};
 
-let deathstar = {};
+let deathstar = {
+  weapon: 'Planet destroying laser'
+};
+
 goBoom.call(deathstar);
 // this === deathstar
 ```
@@ -136,11 +139,18 @@ represent proper nouns within our application. Therefore they should follow
 the convention of capitalized names:
 
 ```js
-function Deathstar() {
-    console.log(this);
-}
+const Deathstar = function (weapon) {
+  console.log("this is ", this);
+  this.emporer = "Darth Sidius";
+  this.weapon = weapon;
+  this.whatIsThis = function(){
+    console.log("Inside whatIsThis, this is ", this);
+  };
+  console.log("this is ", this);
+};
 
-let thatsNoMoon = new Deathstar();
+let thatsNoMoon = new Deathstar('Mega giant huge laser');
+let thatsNoMoon = new Deathstar('Happy little Ewoks');
 // this === shiny new Deathstar instance
 ```
 
@@ -149,25 +159,28 @@ would say "the object receives the method".
 
 How this breaks down:
 
-1.  Creates a new empty object ({})
-1.  Attaches the constructor to the object as a property
-1.  Invokes the constructor function on the new object
-1.  Returns the object
+1.  Creates a new empty object ({}) // {}
+1.  Attaches the constructor to the object as a property // {}.constructor = Deathstar
+1.  Invokes the constructor function on the new object // {}.constructor(`???`);
+1.  Returns the object // {}
 
 ## This and Array Methods
 
 ```javascript
-function Counter() {
+let Counter = function() {
   this.sum = 0;
   this.count = 0;
-}
+};
+
+const sumAndCount = function(entry){
+  this.sum += entry;
+  ++this.count;
+  console.log(this);
+};
+
 Counter.prototype.add = function(array) {
-  array.forEach(function(entry) {
-    this.sum += entry;
-    ++this.count;
-    console.log(this);
-  }, this);
-  // ^---- Note
+  array.forEach(sumAndCount, this);
+                          // ^---- Note
 };
 
 let obj = new Counter();
@@ -176,6 +189,15 @@ obj.count
 // 3
 obj.sum
 // 16
+```
+What if we re-defined `add` the following way?
+```js
+let anyObject = {};
+
+Counter.prototype.add = function(array) {
+  array.forEach(sumAndCount, anyObject);
+                          // ^---- Note
+};
 ```
 
 Since obj.add() calls add() with `this` referring to obj, in add passing `this`
@@ -280,6 +302,8 @@ Many of these scripts use the special `debugger` keyword to stop JS execution
 and open your console. Use this opportunity to inspect your environment (perhaps
 by looking at `this`?) and then
 [continue](https://developer.chrome.com/devtools/docs/javascript-debugging).
+When you're ready to begin, open the console and type `open this.html` and
+follow the instructions on the screen.
 
 ## Additional Resources
 
