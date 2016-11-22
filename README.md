@@ -17,6 +17,7 @@ idioms.
 
 1.  [Fork and clone](https://github.com/ga-wdi-boston/meta/wiki/ForkAndClone)
 this repository.
+1.  `npm install`
 
 ## `this` Is A Reference
 
@@ -293,7 +294,8 @@ Fat arrow quick takes:
 
 ## Lab (Pair)
 
-Pair with a partner and follow the instructions in [`this.html`](this.html).
+
+Pair with a partner and follow the instructions in [`index.html`](index.html).
 Your goal in this assignment is to read and understand the code examples
 presented. Take time to contemplate the execution flow, and note any questions
 you have for discussion.
@@ -302,8 +304,8 @@ Many of these scripts use the special `debugger` keyword to stop JS execution
 and open your console. Use this opportunity to inspect your environment (perhaps
 by looking at `this`?) and then
 [continue](https://developer.chrome.com/devtools/docs/javascript-debugging).
-When you're ready to begin, open the console and type `open this.html` and
-follow the instructions on the screen.
+
+When you're ready to begin, run `grunt serve` and navigate to (http://localhost:7165/)
 
 ## Additional Resources
 
