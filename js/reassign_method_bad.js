@@ -1,13 +1,12 @@
-/* jshint debug: true */
 // This data variable is a global variable
-const data = [
+var data = [
     {name:'Samantha', age:12},
     {name:'Alexis', age:14}
 ];
 
 // user is an object literal with a data property of names and ages
 // and a showFunction function that displays one of the name/age.
-const user = {
+var user = {
 
     // this data variable is a property on the user object
     data    :[
@@ -16,7 +15,7 @@ const user = {
     ],
     showData:function (event) {
         // random number between 0 and 1
-        const randomNum = ((Math.random () * 2 | 0) + 1) - 1;
+        var randomNum = ((Math.random () * 2 | 0) + 1) - 1;
 
         // Hey, what is the 'this' variable pointing to?
         debugger;
@@ -35,7 +34,7 @@ const user = {
 };
 
 // Assign the user.showData function to a global variable
-const showUserData = user.showData;
+var showUserData = user.showData;
 // NOTE: the showUserVariable is a GLOBAL variable pointing to a
 // function.
 

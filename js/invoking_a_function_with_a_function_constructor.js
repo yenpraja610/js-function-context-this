@@ -11,18 +11,18 @@ function Person(firstName, lastName) {
 }
 
 // This	creates a new object
-const ada = new Person("Ada","Lovelace");
-console.log(ada.firstName);
-console.log(typeof ada);
-console.log(typeof Person);
+var ada = new Person("Ada","Lovelace");
+ada.firstName;
+typeof ada;
+typeof Person;
 
 // Note the difference between this and...
-// const ada = {
+// var ada = {
 //   firstName: "Ada",
 //   lastName: "Lovelace"
 // }
 // ada.firstName;
 
 // This is reusable...
-// const grace = new Person("Grace", "Hopper");
+// var grace = new Person("Grace", "Hopper");
 // grace.firstName;

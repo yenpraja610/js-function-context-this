@@ -1,14 +1,14 @@
 // Invoking a Function as a Function
 
-console.log("this(before):", this);
+console.log("this(before):", this)
 
-const hello =function(thing) {
-  console.log("this(in hello):", this);
+function hello(thing) {
+  console.log("this(in hello):", this)
   console.log("Hello " + thing);
-};
+}
 
 // this:
-hello("World!");
+hello("World!")
 
 // This function does not belong to any object.
 // Therefore it belongs to the default global object.

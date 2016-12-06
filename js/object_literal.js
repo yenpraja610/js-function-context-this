@@ -1,4 +1,3 @@
-/* jshint debug: true */
 /*
   We use this similar to the way we use pronouns in natural
   languages like English and French. We write: “John is running
@@ -12,7 +11,7 @@
 */
 
 // Create an object literal for person.
-const person = {
+var person = {
     firstName   :'Penelope',
     lastName    :'Barrymore',
     fullName:function () {
