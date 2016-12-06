@@ -17,6 +17,7 @@ idioms.
 
 1.  [Fork and clone](https://github.com/ga-wdi-boston/meta/wiki/ForkAndClone)
 this repository.
+1.  `npm install`
 
 ## `this` Is A Reference
 
@@ -69,8 +70,8 @@ When a function is invoked without context, the function is bound to global
 scope:
 
 ```js
-function goBoom() {
-    console.log(this);
+const goBoom = function() {
+    console.log('this is ', this);
 }
 
 goBoom();
@@ -96,7 +97,7 @@ to its host:
 ```js
 let deathstar = {
     goBoom: function() {
-      console.log(this);
+      console.log('this is ', this);
   }
 };
 
@@ -113,11 +114,14 @@ Function objects have their own set of native methods, most notably are
 contextual object.
 
 ```js
-function goBoom() {
-    console.log(this);
-}
+const goBoom = function (weapon) {
+  console.log("this refers to ", this);
+};
 
-let deathstar = {};
+let deathstar = {
+  weapon: 'Planet destroying laser'
+};
+
 goBoom.call(deathstar);
 // this === deathstar
 ```
@@ -136,11 +140,18 @@ represent proper nouns within our application. Therefore they should follow
 the convention of capitalized names:
 
 ```js
-function Deathstar() {
-    console.log(this);
-}
+const Deathstar = function (weapon) {
+  console.log("this is ", this);
+  this.emporer = "Darth Sidius";
+  this.weapon = weapon;
+  this.whatIsThis = function(){
+    console.log("Inside whatIsThis, this is ", this);
+  };
+  console.log("this is ", this);
+};
 
-let thatsNoMoon = new Deathstar();
+let thatsNoMoon = new Deathstar('Mega giant huge laser');
+let thatsNoMoon = new Deathstar('Happy little Ewoks');
 // this === shiny new Deathstar instance
 ```
 
@@ -149,33 +160,45 @@ would say "the object receives the method".
 
 How this breaks down:
 
-1.  Creates a new empty object ({})
-1.  Attaches the constructor to the object as a property
-1.  Invokes the constructor function on the new object
-1.  Returns the object
+1.  Creates a new empty object ({}) // {}
+1.  Attaches the constructor to the object as a property // {}.constructor = Deathstar
+1.  Invokes the constructor function on the new object // {}.constructor(`???`);
+1.  Returns the object // {}
 
 ## This and Array Methods
 
 ```javascript
-function Counter() {
+let Counter = function() {
   this.sum = 0;
   this.count = 0;
-}
-Counter.prototype.add = function(array) {
-  array.forEach(function(entry) {
-    this.sum += entry;
-    ++this.count;
-    console.log(this);
-  }, this);
-  // ^---- Note
 };
 
-let obj = new Counter();
-obj.add([2, 5, 9]);
-obj.count
+const sumAndCount = function(entry){
+  this.sum += entry;
+  ++this.count;
+  console.log(this);
+};
+
+Counter.prototype.add = function(array) {
+  array.forEach(sumAndCount, this);
+                          // ^---- Note
+};
+
+const counter = new Counter();
+counter.add([2, 5, 9]);
+counter.count
 // 3
-obj.sum
+counter.sum
 // 16
+```
+What if we re-defined `add` the following way?
+```js
+let anyObject = {};
+
+Counter.prototype.add = function(array) {
+  array.forEach(sumAndCount, anyObject);
+                          // ^---- Note
+};
 ```
 
 Since obj.add() calls add() with `this` referring to obj, in add passing `this`
@@ -271,7 +294,8 @@ Fat arrow quick takes:
 
 ## Lab (Pair)
 
-Pair with a partner and follow the instructions in [`this.html`](this.html).
+
+Pair with a partner and follow the instructions in [`index.html`](index.html).
 Your goal in this assignment is to read and understand the code examples
 presented. Take time to contemplate the execution flow, and note any questions
 you have for discussion.
@@ -280,6 +304,8 @@ Many of these scripts use the special `debugger` keyword to stop JS execution
 and open your console. Use this opportunity to inspect your environment (perhaps
 by looking at `this`?) and then
 [continue](https://developer.chrome.com/devtools/docs/javascript-debugging).
+
+When you're ready to begin, run `grunt serve` and navigate to (http://localhost:7165/)
 
 ## Additional Resources
 

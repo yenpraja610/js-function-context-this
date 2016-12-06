@@ -7,13 +7,13 @@
 // Both methods can be used to invoke a function,
 //  and both methods must have the owner object as first parameter.
 
-var sally_ride = {
+const sally_ride = {
   name: "Sally Ride"
-}
+};
 
-var astronaut_steve = {
+const astronaut_steve = {
   name: "Steve Swanson"
-}
+};
 
 
 function hello(thing) {
