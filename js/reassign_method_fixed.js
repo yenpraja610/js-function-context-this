@@ -1,10 +1,11 @@
 /* jshint debug: true */
+'use strict';
 // This data variable is a global variable
 const data = [
     {name:'Samantha', age:12},
     {name:'Alexis', age:14}
 ];
-
+console.log(data);
 // user is an object literal with a data property of names and ages
 // and a showFunction function that displays one of the name/age.
 const user = {
@@ -14,7 +15,7 @@ const user = {
         {name:'T. Woods', age:37},
         {name:'P. Mickelson', age:43}
     ],
-    showData:function (event) {
+    showData:function () {
         // random number between 0 and 1
         const randomNum = ((Math.random () * 2 | 0) + 1) - 1;
 

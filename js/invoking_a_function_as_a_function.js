@@ -1,8 +1,9 @@
 // Invoking a Function as a Function
+'use strict';
 
 console.log("this(before):", this);
 
-const hello =function(thing) {
+const hello = function(thing) {
   console.log("this(in hello):", this);
   console.log("Hello " + thing);
 };

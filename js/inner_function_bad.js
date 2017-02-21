@@ -1,4 +1,6 @@
 /* jshint debug: true */
+'use strict';
+
 const user = {
     tournament:'The Masters',
     data      :[

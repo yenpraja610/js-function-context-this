@@ -1,11 +1,12 @@
 // Global variables
 /* jshint debug: true */
+'use strict';
 
-const firstName = "Peter",
-lastName = "Ally";
+const firstName = "Peter", lastName = "Ally";
+console.log(firstName + ' ' + lastName);
 
 // Global function
-function showFullName () {
+const showFullName = function () {
 
     // Hey, what is the 'this' variable pointing to?
     debugger;
@@ -23,7 +24,7 @@ function showFullName () {
     // "this" inside this function will have the value of the window object
     // because the showFullName () function is defined in the global scope, just like the firstName and lastName
     console.log (this.firstName + ' ' + this.lastName);
-}
+};
 
 // Global person, it's an object literal
 const person = {

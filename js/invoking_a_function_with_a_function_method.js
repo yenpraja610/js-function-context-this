@@ -1,5 +1,5 @@
 // Invoking a Function with a Function Method
-
+'use strict';
 // In JavaScript, functions are objects.
 // JavaScript functions have properties and methods.
 
@@ -16,12 +16,12 @@ const astronaut_steve = {
 };
 
 
-function hello(thing) {
+const hello = function (thing) {
   console.log("this(in hello):", this);
   console.log("Hello " + thing + " -- " + this.name);
-}
+};
 
 // this:
 hello.call(sally_ride, "Shuttle!");
 
-// hello.call(astronaut_steve, "ISS!");
+hello.call(astronaut_steve, "ISS!");
