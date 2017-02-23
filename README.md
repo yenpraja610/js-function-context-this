@@ -31,6 +31,89 @@ this repository.
 >
 > Source: [Understanding Javascript 'this' pointer.](http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/)
 
+## Block Scope Refresher
+Scope refers to where variables and functions are accessible.
+
+Example 1:
+```js
+let a = 1;
+
+if (true) {
+  a = 2;
+  console.log(a) // What logs?
+}
+console.log(a) // What logs?
+```
+
+Example 2:
+```js
+let a = 1;
+
+if (true) {
+  let a = 2;
+  console.log(a) // What logs?
+}
+console.log(a) // What logs?
+```
+
+Example 3:
+```js
+const reAssign(){
+  a = b;
+  console.log( a );
+}
+
+let a = 1;
+let b = 2;
+
+reAssign(); // What logs?
+console.log(a); // What logs?
+```
+
+Example 4:
+```js
+const reAssign(a, b){
+  a = b;
+  console.log( a );
+}
+
+let a = 1;
+let b = 2;
+
+reAssign(); // What logs?
+console.log(a); // What logs?
+```
+
+Example 5:
+```js
+const reAssign(a, b){
+  a = b;
+  console.log( a );
+}
+
+let a = 1;
+let b = 2;
+
+reAssign(a, b); // What logs?
+console.log(a); // What logs?
+```
+
+Scope can be helpful in understanding call context.
+
+```js
+const reAssign(a, b){
+  a = b;
+  console.log( a );
+}
+
+reAssign(2, 3); // what logs
+reAssign(10, 11); // what logs
+reAssign(10, 11); // what logs
+```
+
+The value of our parameters `a` and `b` depend on when the function is called,
+we can not define what `a` or `b` are until the function has been called.
+
 ## `this` Changes by Call Context
 
 A function can indiscriminately operate upon *any* object. When a function is
