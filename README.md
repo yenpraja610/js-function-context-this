@@ -31,7 +31,28 @@ this repository.
 >
 > Source: [Understanding Javascript 'this' pointer.](http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/)
 
-## Block Scope Refresher
+## `this` in the Global Scope Depends on the Environment
+*In browsers,* The top-level scope is the global scope.
+In the top-level scope in browsers `this` is equivalent to ```window```.
+That means that in browsers if you're in the global scope
+```let```/```const```/```var``` something will define a global variable.
+
+*In Node.js,* The top-level scope is not the global scope.
+In the top-level code in a Node module, `this` is equivalent to `module.exports`;
+```let```/```const```/```var``` something inside a Node.js module will be
+local to that module.  Node has a global variable named ```global```
+and is documented [here](https://nodejs.org/api/globals.html#globals_global).
+
+Since ```let```/```const```/```var``` variables are local to each module,
+```global``` is the true global variable that is shared across modules.[SO]](http://stackoverflow.com/a/19323672/2842709)
+
+```js
+console.log("In Browser vs In Node: this is ", this);
+console.log("this === window, ", this === window);
+console.log("this === module.exports, ", this === module.exports);
+```
+
+## Block Scope
 Scope refers to where variables and functions are accessible.
 
 Example 1:
@@ -157,9 +178,10 @@ const goBoom = function() {
     console.log('this is ', this);
 }
 
-goBoom();
-// this === window
+goBoom(); // in the browser
 
+// In the browser
+// this === window
 // This is the same as:
 window.goBoom();
 ```
