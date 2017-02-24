@@ -225,7 +225,7 @@ Function objects have their own set of native methods, most notably are
 contextual object.
 
 ```js
-const goBoom = function (weapon) {
+const goBoom = function () {
   console.log("this refers to ", this);
 };
 
