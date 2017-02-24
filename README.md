@@ -221,8 +221,13 @@ deathstar.goBoom();
 ### Call/Apply Invocation Pattern
 
 Function objects have their own set of native methods, most notably are
-`.call` and `.apply`. These methods will invoke the function with a provided
+[`.call`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
+and [`.apply`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply).
+These methods will invoke the function with a provided
 contextual object.
+While the syntax of these functions are almost identical,
+the fundamental difference is that ```call()``` accepts an argument list,
+while ```apply()``` accepts a single array of arguments.
 
 ```js
 const goBoom = function () {
