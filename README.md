@@ -178,12 +178,18 @@ const goBoom = function() {
     console.log('this is ', this);
 }
 
-goBoom(); // in the browser
+goBoom(); // what logs in the browser vs in node?
+```
 
-// In the browser
-// this === window
-// This is the same as:
-window.goBoom();
+Following best practices, we can add `use strict` to get consistent results
+
+```js
+'use strict'
+const goBoom = function() {
+    console.log('this is ', this);
+}
+
+goBoom(); // what logs in the browser vs in node?
 ```
 
 **Context**: `this` refers to the `window` object (global scope).  Here we
