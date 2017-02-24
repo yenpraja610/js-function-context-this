@@ -276,10 +276,12 @@ would say "the object receives the method".
 
 How this breaks down:
 
-1.  Creates a new empty object ({}) // {}
-1.  Attaches the constructor to the object as a property // {}.constructor = Deathstar
-1.  Invokes the constructor function on the new object // {}.constructor(`???`);
-1.  Returns the object // {}
+1.  Creates a new empty object ({}) ```// {}```
+1.  Attaches the constructor to the object as a property
+```// {}.constructor = Deathstar```
+1.  Invokes the constructor function on the new object
+```// {}.constructor(`???`);```
+1.  Returns the object ```// {}```
 
 ## This and Array Methods
 
@@ -317,8 +319,8 @@ Counter.prototype.add = function(array) {
 };
 ```
 
-Since obj.add() calls add() with `this` referring to obj, in add passing `this`
-into forEach() makes `this` in the forEach() callback also refer to obj.
+Since ```obj.add()``` calls ```add()``` with `this` referring to obj, in add passing `this`
+into ```forEach()``` makes `this` in the ```forEach()``` callback also refer to obj.
 
 [forEach - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
 
