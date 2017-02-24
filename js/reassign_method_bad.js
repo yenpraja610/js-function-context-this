@@ -1,5 +1,5 @@
 /* jshint debug: true */
-'use strict';
+// 'use strict';
 
 // This data variable is a global variable
 const data = [
@@ -49,3 +49,7 @@ const showUserData = user.showData;
 // the console are from the global data array, not from the data
 // array in the user object.
 showUserData();
+
+// This is another example where we do not have `use strict`
+// If we had `use strict` it would still fail but differently
+// Uncomment `use strict` and see the difference for yourself

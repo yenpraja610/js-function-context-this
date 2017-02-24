@@ -18,7 +18,7 @@ const user = {
             // What is the person variable?
             // What is the the theUserObj variable?
             debugger;
-            // The 'this' pointer is still the global object.
+            // The 'this' pointer is still undefined.
             // The person is a parameter that was passed into this anon
             // function.
             // The theUserObj variable is picked up from the enclosing
