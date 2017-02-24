@@ -41,4 +41,6 @@ const user = {
 // be invoked in WHEN IT IS INVOKED/EXECUTED/RAN.
 // And the 'this' variable always points to the runtime
 // Context of function!
-$('button').on('click', user.clickHandler.bind(user));
+document.querySelector('button').onclick = user.clickHandler.bind(user);
+// jquery not loading properly potentially due to script being loaded in body
+// $('button').on('click', user.clickHandler.bind(user));

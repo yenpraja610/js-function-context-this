@@ -40,4 +40,6 @@ const user = {
     }
 };
 
-$('button').on('click', user.clickHandler);
+document.querySelector('button').onclick = user.clickHandler;
+// jquery not loading properly potentially due to script being loaded in body
+// $('button').on('click', user.clickHandler);
