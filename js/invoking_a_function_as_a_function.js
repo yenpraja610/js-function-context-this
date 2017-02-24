@@ -1,8 +1,9 @@
 // Invoking a Function as a Function
+// 'use strict';
 
 console.log("this(before):", this);
 
-const hello =function(thing) {
+const hello = function(thing) {
   console.log("this(in hello):", this);
   console.log("Hello " + thing);
 };
@@ -29,4 +30,5 @@ hello("World!");
 
 
 // **Gotcha**: This behavior has changed in ECMAScript 5
-//  only when using strict mode[2]: 'use strict';
+// only when using strict mode[2]: 'use strict';
+// uncomment `use strict` to see the difference

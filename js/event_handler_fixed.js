@@ -1,14 +1,16 @@
 /* jshint debug: true */
+'use strict';
+
 const user = {
     data:[
-        {name:'T. Woods', age:37},
-        {name:'P. Mickelson', age:43}
+        {name:'T. Woods', handicap:37},
+        {name:'P. Mickelson', handicap:43}
     ],
-    clickHandler:function (event) {
+    clickHandler:function () {
         // random number between 0 and 1
         let randomNum = ((Math.random () * 2 | 0) + 1) - 1,
         randomName,
-        randomAge;
+        randomHandicap;
 
         // Hey, what is the 'this' variable pointing to?
         debugger;
@@ -25,11 +27,11 @@ const user = {
         // Yes, because this points to the user object literal
         // which has a data property.
         randomName = this.data[randomNum].name;
-        randomAge = this.data[randomNum].age;
+        randomHandicap = this.data[randomNum].handicap;
 
-        // This line is printing a random person's name and age from
+        // This line is printing a random person's name and handicap from
         // the data array.
-        console.log( randomName + ' ' + randomAge);
+        console.log( randomName + ' ' + randomHandicap);
 
     }
 };
@@ -39,4 +41,6 @@ const user = {
 // be invoked in WHEN IT IS INVOKED/EXECUTED/RAN.
 // And the 'this' variable always points to the runtime
 // Context of function!
-document.querySelector('button').addEventListener('click', user.clickHandler.bind(user));
+document.querySelector('button').onclick = user.clickHandler.bind(user);
+// jquery not loading properly potentially due to script being loaded in body
+// $('button').on('click', user.clickHandler.bind(user));

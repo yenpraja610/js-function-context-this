@@ -1,9 +1,11 @@
 /* jshint debug: true */
+'use strict';
+
 const user = {
     tournament:'The Masters',
     data      :[
-        {name:'T. Woods', age:37},
-        {name:'P. Mickelson', age:43}
+        {name:'T. Woods', handicap:37},
+        {name:'P. Mickelson', handicap:43}
     ],
 
     showPersonTournament:function () {
@@ -30,7 +32,7 @@ const user = {
             // longer refers to the user object.
             // This inner function cannot access the outer function's 'this'
             console.log ('What is This referring to? ' + this);
-            //[object Window]
+            // undefined
 
             debugger;
             // Check this and person variables.
@@ -41,8 +43,7 @@ const user = {
             // Because I said so, oh sorry. Because the global
             // object has no flipping tournament property. Right?
             console.log (person.name + ' is playing at ' + this.tournament);
-            // T. Woods is playing at undefined
-            // P. Mickelson is playing at undefined
+            // Uncaught TypeError: Cannot read property 'tournament' of undefined
         });
     }
 };

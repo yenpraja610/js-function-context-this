@@ -1,4 +1,5 @@
 // Invoking a Function as a Method
+'use strict';
 
 // In JavaScript you can define function as object methods.
 // The following example creates an object (elon_musk),

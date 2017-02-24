@@ -31,6 +31,112 @@ this repository.
 >
 > Source: [Understanding Javascript 'this' pointer.](http://javascriptissexy.com/understand-javascripts-this-with-clarity-and-master-it/)
 
+## `this` in the Global Scope Depends on the Environment
+**In browsers**
+- The top-level scope is the global scope.
+- In the top-level scope in browsers `this` is equivalent to ```window```.
+- That means that in browsers if you're in the global scope
+```let```/```const```/```var``` will define a global variable.
+
+**In Node.js**
+- The top-level scope is not the global scope.
+- In the top-level code in a Node module, `this` is equivalent to `module.exports`.
+- That means if you ```let```/```const```/```var``` inside a Node.js module will be local to that module.
+- Node does have a global variable named ```global``` and is documented [here](https://nodejs.org/api/globals.html#globals_global).
+- Since ```let```/```const```/```var``` variables are local to each module,
+```global``` is the true global variable that is shared across modules.
+
+```js
+console.log("In Browser vs In Node: this is ", this);
+console.log("this === window, ", this === window);
+console.log("this === module.exports, ", this === module.exports);
+```
+
+**GOTCHA** Global variables, methods, or functions can easily create name conflicts and bugs in the global object.
+
+## Block Scope
+Scope refers to where variables and functions are accessible.
+
+Example 1:
+```js
+let a = 1;
+
+if (true) {
+  a = 2;
+  console.log(a) // What logs?
+}
+console.log(a) // What logs?
+```
+
+Example 2:
+```js
+let a = 1;
+
+if (true) {
+  let a = 2;
+  console.log(a) // What logs?
+}
+console.log(a) // What logs?
+```
+
+Example 3:
+```js
+const reAssign(){
+  a = b;
+  console.log( a );
+}
+
+let a = 1;
+let b = 2;
+
+reAssign(); // What logs?
+console.log(a); // What logs?
+```
+
+Example 4:
+```js
+const reAssign(a, b){
+  a = b;
+  console.log( a );
+}
+
+let a = 1;
+let b = 2;
+
+reAssign(); // What logs?
+console.log(a); // What logs?
+```
+
+Example 5:
+```js
+const reAssign(a, b){
+  a = b;
+  console.log( a );
+}
+
+let a = 1;
+let b = 2;
+
+reAssign(a, b); // What logs?
+console.log(a); // What logs?
+```
+
+Scope can be helpful in understanding call context.
+
+```js
+const reAssign(a, b){
+  a = b;
+  console.log( a );
+}
+
+reAssign(2, 3); // what logs
+reAssign(10, 11); // what logs
+reAssign(10, 11); // what logs
+```
+
+The value of our parameters `a` and `b` depend on when the function is called,
+we can not define what `a` or `b` are until the function has been called.
+
 ## `this` Changes by Call Context
 
 A function can indiscriminately operate upon *any* object. When a function is
@@ -74,11 +180,18 @@ const goBoom = function() {
     console.log('this is ', this);
 }
 
-goBoom();
-// this === window
+goBoom(); // what logs in the browser vs in node?
+```
 
-// This is the same as:
-window.goBoom();
+Following best practices, we can add `use strict` to get consistent results
+
+```js
+'use strict'
+const goBoom = function() {
+    console.log('this is ', this);
+}
+
+goBoom(); // what logs in the browser vs in node?
 ```
 
 **Context**: `this` refers to the `window` object (global scope).  Here we
@@ -110,11 +223,16 @@ deathstar.goBoom();
 ### Call/Apply Invocation Pattern
 
 Function objects have their own set of native methods, most notably are
-`.call` and `.apply`. These methods will invoke the function with a provided
+[`.call`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
+and [`.apply`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply).
+These methods will invoke the function with a provided
 contextual object.
+While the syntax of these functions are almost identical,
+the fundamental difference is that ```call()``` accepts an argument list,
+while ```apply()``` accepts a single array of arguments.
 
 ```js
-const goBoom = function (weapon) {
+const goBoom = function () {
   console.log("this refers to ", this);
 };
 
@@ -126,8 +244,8 @@ goBoom.call(deathstar);
 // this === deathstar
 ```
 
-**Context**: `this` refers to the passed object.  Here you would say "the
- object receives the method".
+**Context**: `this` refers to the passed object.  Here you would say
+"Call the function goBoom with deathstar as the context (this)".
 
 ### Constructor Invocation Pattern
 
@@ -151,7 +269,7 @@ const Deathstar = function (weapon) {
 };
 
 let thatsNoMoon = new Deathstar('Mega giant huge laser');
-let thatsNoMoon = new Deathstar('Happy little Ewoks');
+let endor = new Deathstar('Happy little Ewoks');
 // this === shiny new Deathstar instance
 ```
 
@@ -160,51 +278,125 @@ would say "the object receives the method".
 
 How this breaks down:
 
-1.  Creates a new empty object ({}) // {}
-1.  Attaches the constructor to the object as a property // {}.constructor = Deathstar
-1.  Invokes the constructor function on the new object // {}.constructor(`???`);
-1.  Returns the object // {}
+1.  Creates a new empty object ({}) ```// {}```
+1.  Attaches the constructor to the object as a property
+```// {}.constructor = Deathstar```
+1.  Invokes the constructor function on the new object
+```// {}.constructor(`???`);```
+1.  Returns the object ```// {}```
 
 ## This and Array Methods
 
+If a ```this``` parameter is provided to ```forEach()``` and other Array Methods,
+it will be passed to callback when invoked, for use as its this value.
+Otherwise, the value ```undefined``` will be passed for use as its its value.
+(forEach)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach#Using_thisArg]
+
 ```javascript
-let Counter = function() {
-  this.sum = 0;
-  this.count = 0;
-};
+let counter = {
+  sum: 0,
+  count: 0,
+  add: function (array){
+    array.forEach(this.sumAndCount); // Note only 1 argument
+  },
+  sumAndCount: function (entry){
+    this.sum += entry;
+    ++this.count;
+  }
+}
 
-const sumAndCount = function(entry){
-  this.sum += entry;
-  ++this.count;
-  console.log(this);
-};
-
-Counter.prototype.add = function(array) {
-  array.forEach(sumAndCount, this);
-                          // ^---- Note
-};
-
-const counter = new Counter();
-counter.add([2, 5, 9]);
-counter.count
-// 3
-counter.sum
-// 16
+counter.add([1,2,3]);
+console.log(counter.sum); // what logs?
 ```
+
+As stated in the documentation, `this` is `undefined` in an array method unless
+we pass the value of `this` as an argument.
+
+```javascript
+let counter = {
+  sum: 0,
+  count: 0,
+  add: function (array){
+    array.forEach(this.sumAndCount, this); // Note 2nd argument
+  },
+  sumAndCount: function (entry){
+    this.sum += entry;
+    ++this.count;
+  }
+}
+
+counter.add([1,2,3]);
+console.log(counter.sum); // what logs?
+```
+
 What if we re-defined `add` the following way?
-```js
+
+```javascript
 let anyObject = {};
 
-Counter.prototype.add = function(array) {
-  array.forEach(sumAndCount, anyObject);
-                          // ^---- Note
-};
+let counter = {
+  sum: 0,
+  count: 0,
+  add: function (array){
+    array.forEach(this.sumAndCount, anyObject);  // Note 2nd argument
+  },
+  sumAndCount: function (entry){
+    this.sum += entry;
+    ++this.count;
+  }
+}
+
+counter.add([1,2,3]);
+console.log(counter.sum); // what logs?
+console.log(anyObject.sum); // what logs?
 ```
 
-Since obj.add() calls add() with `this` referring to obj, in add passing `this`
-into forEach() makes `this` in the forEach() callback also refer to obj.
+Since ```counter.add()``` calls ```add()``` with `this` referring to `counter`,
+passing ```anyObject``` into ```forEach()``` makes `this` in the ```forEach()```
+callback refer to ```anyObject```.
 
 [forEach - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
+
+## Extra: Fat Arrow
+
+Let's look at this problem again, our `this` value is not being passed into
+the array method so it is `undefined` and we do no get our desired results.
+
+```javascript
+
+let counter = {
+  sum: 0,
+  count: 0,
+  add: function (array){
+    array.forEach(this.sumAndCount);
+  },
+  sumAndCount: function (entry){
+    this.sum += entry;
+    ++this.count;
+  }
+}
+
+counter.add([1,2,3]);
+console.log(counter.sum); // what logs?
+```
+
+Now with arrow functions (commonly referred to as "fat arrow"),
+the arrow function does not create it's own `this` context
+which means it is not `undefined` in an array method.
+
+```javascript
+let counter = {
+  sum: 0,
+  count: 0,
+  add: function (array){
+    array.forEach((e) => { this.sumAndCount(e) });
+  },
+  sumAndCount: function (entry){
+    this.sum += entry;
+    ++this.count;
+  }
+}
+```
 
 ## Binding
 
@@ -244,7 +436,7 @@ $ ("button").on('click', user.clickHandler.bind(user));
 ## Summary
 
 1.  Is the function called with `new` (**new binding**)? If so, `this` is the
-newly constructed object.      `let bar = new foo()`
+newly constructed object.      `let bar = new Foo()`
 1.  Is the function called with `call` or `apply` (**explicit binding**), even
 hidden inside a `bind` *hard binding*? If so, `this` is the explicitly
 specified object.
@@ -259,41 +451,7 @@ pick `undefined`, otherwise pick the `global` object.
 
  Source: [You-Dont-Know-JS/ch2.md](https://github.com/getify/You-Dont-Know-JS/blob/58dbf4f867be0d9c51dfc341765e4e4211608aa1/this%20&%20object%20prototypes/ch2.md)
 
-## Extra: Fat Arrow (New in ES6)
-
-Consider the following code, what is `this`?
-
-```javascript
-$('.current-time').each(function() {
-  setInterval(function() {
-    $(this).text(Date.now());
-  }, 1000);
-});
-```
-
-The above code won't return do what you want, can you think of a
-way to get the code to do what is expcted?
-
-```bash
-Figure this out on your own.
-```
-
-Now with arrow functions (commonly referred to as "fat arrow"), you
-could write the code below and it would have the intended effect:
-
-```javascript
-$('.current-time').each(function() {
-  setInterval(() => $(this).text(Date.now()), 1000);
-});
-```
-
-Fat arrow quick takes:
-
-1.  It does not create it's own `this` context.
-1.  A one line fat arrow function has an implicit return.
-
 ## Lab (Pair)
-
 
 Pair with a partner and follow the instructions in [`index.html`](index.html).
 Your goal in this assignment is to read and understand the code examples
@@ -318,5 +476,6 @@ When you're ready to begin, run `grunt serve` and navigate to (http://localhost:
 
 ## [License](LICENSE)
 
-1. All content is licensed under a CC­BY­NC­SA 4.0 license.
-1. All software code is licensed under GNU GPLv3. For commercial use or alternative licensing, please contact legal@ga.co.
+1.  All content is licensed under a CC­BY­NC­SA 4.0 license.
+1.  All software code is licensed under GNU GPLv3. For commercial use or
+    alternative licensing, please contact legal@ga.co.

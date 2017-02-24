@@ -1,9 +1,11 @@
 /* jshint debug: true */
+'use strict';
+
 const user = {
     tournament:'The Masters',
     data      :[
-        {name:'T. Woods', age:37},
-        {name:'P. Mickelson', age:43}
+        {name:'T. Woods', handicap: 37},
+        {name:'P. Mickelson', handicap: 43}
     ],
 
     showPersonTournament:function () {
@@ -16,7 +18,7 @@ const user = {
             // What is the person variable?
             // What is the the theUserObj variable?
             debugger;
-            // The 'this' pointer is still the global object.
+            // The 'this' pointer is still undefined.
             // The person is a parameter that was passed into this anon
             // function.
             // The theUserObj variable is picked up from the enclosing

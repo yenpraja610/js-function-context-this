@@ -1,4 +1,5 @@
 /* jshint debug: true */
+'use strict';
 /*
   We use this similar to the way we use pronouns in natural
   languages like English and French. We write: “John is running
@@ -13,9 +14,9 @@
 
 // Create an object literal for person.
 const person = {
-    firstName   :'Penelope',
-    lastName    :'Barrymore',
-    fullName:function () {
+    firstName: 'Penelope',
+    lastName: 'Barrymore',
+    fullName: function () {
 
         // Hey, what is the 'this' variable pointing to?
         debugger;
