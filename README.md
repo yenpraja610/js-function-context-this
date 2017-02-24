@@ -355,6 +355,47 @@ callback refer to ```anyObject```.
 
 [forEach - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
 
+## Extra: Fat Arrow
+
+Let's look at this problem again, our `this` value is not being passed into
+the array method so it is `undefined` and we do no get our desired results.
+
+```javascript
+
+let counter = {
+  sum: 0,
+  count: 0,
+  add: function (array){
+    array.forEach(this.sumAndCount);
+  },
+  sumAndCount: function (entry){
+    this.sum += entry;
+    ++this.count;
+  }
+}
+
+counter.add([1,2,3]);
+console.log(counter.sum); // what logs?
+```
+
+Now with arrow functions (commonly referred to as "fat arrow"),
+the arrow function does not create it's own `this` context
+which means it is not `undefined` in an array method.
+
+```javascript
+let counter = {
+  sum: 0,
+  count: 0,
+  add: function (array){
+    array.forEach((e) => { this.sumAndCount(e) });
+  },
+  sumAndCount: function (entry){
+    this.sum += entry;
+    ++this.count;
+  }
+}
+```
+
 ## Binding
 
 Consider the following code:
@@ -408,41 +449,7 @@ pick `undefined`, otherwise pick the `global` object.
 
  Source: [You-Dont-Know-JS/ch2.md](https://github.com/getify/You-Dont-Know-JS/blob/58dbf4f867be0d9c51dfc341765e4e4211608aa1/this%20&%20object%20prototypes/ch2.md)
 
-## Extra: Fat Arrow (New in ES6)
-
-Consider the following code, what is `this`?
-
-```javascript
-$('.current-time').each(function() {
-  setInterval(function() {
-    $(this).text(Date.now());
-  }, 1000);
-});
-```
-
-The above code won't return do what you want, can you think of a
-way to get the code to do what is expcted?
-
-```bash
-Figure this out on your own.
-```
-
-Now with arrow functions (commonly referred to as "fat arrow"), you
-could write the code below and it would have the intended effect:
-
-```javascript
-$('.current-time').each(function() {
-  setInterval(() => $(this).text(Date.now()), 1000);
-});
-```
-
-Fat arrow quick takes:
-
-1.  It does not create it's own `this` context.
-1.  A one line fat arrow function has an implicit return.
-
 ## Lab (Pair)
-
 
 Pair with a partner and follow the instructions in [`index.html`](index.html).
 Your goal in this assignment is to read and understand the code examples
