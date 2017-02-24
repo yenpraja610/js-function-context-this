@@ -355,7 +355,7 @@ $ ("button").on('click', user.clickHandler.bind(user));
 ## Summary
 
 1.  Is the function called with `new` (**new binding**)? If so, `this` is the
-newly constructed object.      `let bar = new foo()`
+newly constructed object.      `let bar = new Foo()`
 1.  Is the function called with `call` or `apply` (**explicit binding**), even
 hidden inside a `bind` *hard binding*? If so, `this` is the explicitly
 specified object.
