@@ -1,6 +1,6 @@
 // Global variables
 /* jshint debug: true */
-'use strict';
+// 'use strict';
 
 const firstName = "Peter", lastName = "Ally";
 console.log(firstName + ' ' + lastName);
@@ -47,3 +47,6 @@ window.showFullName (); // Peter Ally
 
 // "this" inside the showFullName () method that is defined inside the person object still refers to the person object, hence:
 person.showFullName (); // Penelope Barrymore
+
+// There's a problem...we aren't using `use strict`.
+// uncomment `use strict` and do the exercise again, what changes?
