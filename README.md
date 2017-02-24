@@ -262,7 +262,7 @@ const Deathstar = function (weapon) {
 };
 
 let thatsNoMoon = new Deathstar('Mega giant huge laser');
-let thatsNoMoon = new Deathstar('Happy little Ewoks');
+let endor = new Deathstar('Happy little Ewoks');
 // this === shiny new Deathstar instance
 ```
 
