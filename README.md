@@ -285,42 +285,73 @@ How this breaks down:
 
 ## This and Array Methods
 
+If a ```this``` parameter is provided to ```forEach()``` and other Array Methods,
+it will be passed to callback when invoked, for use as its this value.
+Otherwise, the value ```undefined``` will be passed for use as its its value.
+(forEach)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach#Using_thisArg]
+
 ```javascript
-let Counter = function() {
-  this.sum = 0;
-  this.count = 0;
-};
+let counter = {
+  sum: 0,
+  count: 0,
+  add: function (array){
+    array.forEach(this.sumAndCount); // Note only 1 argument
+  },
+  sumAndCount: function (entry){
+    this.sum += entry;
+    ++this.count;
+  }
+}
 
-const sumAndCount = function(entry){
-  this.sum += entry;
-  ++this.count;
-  console.log(this);
-};
-
-Counter.prototype.add = function(array) {
-  array.forEach(sumAndCount, this);
-                          // ^---- Note
-};
-
-const counter = new Counter();
-counter.add([2, 5, 9]);
-counter.count
-// 3
-counter.sum
-// 16
+counter.add([1,2,3]);
+console.log(counter.sum); // what logs?
 ```
+
+As stated in the documentation, `this` is `undefined` in an array method unless
+we pass the value of `this` as an argument.
+
+```javascript
+let counter = {
+  sum: 0,
+  count: 0,
+  add: function (array){
+    array.forEach(this.sumAndCount, this); // Note 2nd argument
+  },
+  sumAndCount: function (entry){
+    this.sum += entry;
+    ++this.count;
+  }
+}
+
+counter.add([1,2,3]);
+console.log(counter.sum); // what logs?
+```
+
 What if we re-defined `add` the following way?
-```js
+
+```javascript
 let anyObject = {};
 
-Counter.prototype.add = function(array) {
-  array.forEach(sumAndCount, anyObject);
-                          // ^---- Note
-};
+let counter = {
+  sum: 0,
+  count: 0,
+  add: function (array){
+    array.forEach(this.sumAndCount, anyObject);  // Note 2nd argument
+  },
+  sumAndCount: function (entry){
+    this.sum += entry;
+    ++this.count;
+  }
+}
+
+counter.add([1,2,3]);
+console.log(counter.sum); // what logs?
+console.log(anyObject.sum); // what logs?
 ```
 
-Since ```obj.add()``` calls ```add()``` with `this` referring to obj, in add passing `this`
-into ```forEach()``` makes `this` in the ```forEach()``` callback also refer to obj.
+Since ```counter.add()``` calls ```add()``` with `this` referring to `counter`,
+passing ```anyObject``` into ```forEach()``` makes `this` in the ```forEach()```
+callback refer to ```anyObject```.
 
 [forEach - JavaScript | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
 
