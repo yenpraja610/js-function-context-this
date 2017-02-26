@@ -35,7 +35,7 @@ const user = {
 };
 
 // Assign the user.showData function to a global variable
-const showUserData = user.showData.bind(user);
+const showUserData = user.showData;
 // NOTE: the showUserVariable is a GLOBAL variable pointing to a
 // function.
 // But we used the javacript 'bind' method to explicitly set the
@@ -43,4 +43,4 @@ const showUserData = user.showData.bind(user);
 
 // When we execute the showUserData function, the values printed to
 // the console are from data array in the user object.
-showUserData();
+showUserData.bind(user);

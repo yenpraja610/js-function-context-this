@@ -2,8 +2,6 @@
 
 # JavaScript: Context \& `this`
 
-![What is this?](http://i.giphy.com/bYGMDZP58u5bi.gif)
-
 ## Objectives
 
 By the end of this lesson, students should be able to:
@@ -74,9 +72,9 @@ let a = 1;
 
 if (true) {
   let a = 2;
-  console.log(a) // What logs?
+  console.log(a) // What logs? 2
 }
-console.log(a) // What logs?
+console.log(a) // What logs? 1
 ```
 
 Example 3:
@@ -89,7 +87,7 @@ const reAssign(){
 let a = 1;
 let b = 2;
 
-reAssign(); // What logs?
+reAssign(); // What logs? 2
 console.log(a); // What logs?
 ```
 
@@ -181,6 +179,8 @@ const goBoom = function() {
 }
 
 goBoom(); // what logs in the browser vs in node?
+
+In browser the window in node the entire object.
 ```
 
 Following best practices, we can add `use strict` to get consistent results
@@ -192,6 +192,8 @@ const goBoom = function() {
 }
 
 goBoom(); // what logs in the browser vs in node?
+
+Undefined on both
 ```
 
 **Context**: `this` refers to the `window` object (global scope).  Here we
